@@ -8,51 +8,46 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-body{margin:0;font-family:'Poppins',sans-serif;background:#f4f2ee;overflow-x:hidden}
+body{margin:0;font-family:'Poppins',sans-serif;background:#e9e7e2;overflow-x:hidden}
 
 /* COVER */
-#cover{
-position:fixed;inset:0;z-index:999;
-background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover;
+#cover{position:fixed;inset:0;z-index:9999;background:url('sky.jpg') center/cover;
 display:flex;justify-content:center;align-items:center;transition:1s}
 #cover.hide{opacity:0;pointer-events:none}
 
-.cover-box{text-align:center;background:rgba(255,255,255,0.85);padding:30px;border-radius:20px}
+.cover-box{background:rgba(255,255,255,.85);padding:30px;border-radius:20px;text-align:center}
 .cover-box h1{font-family:'Playfair Display',serif;margin:0}
-.btn{margin-top:15px;padding:12px 28px;border-radius:30px;background:#444;color:white;border:none}
+.btn{margin-top:15px;padding:12px 28px;border-radius:30px;background:#444;color:#fff;border:none}
 
-/* HERO SCENE */
-.hero{
-height:100vh;position:relative;
-background:linear-gradient(#dfe6e3,#f7f6f3);
-display:flex;justify-content:center;align-items:center;overflow:hidden}
-.hero::before{
-content:"";position:absolute;inset:0;
-background:url('https://i.gifer.com/7efs.gif') bottom/cover no-repeat;
-opacity:.35}
+/* SCENE */
+.scene{height:200vh;position:relative;overflow:hidden}
+.layer{position:fixed;width:120%;left:-10%;pointer-events:none}
 
-.frame{
-position:relative;text-align:center;z-index:2;
-opacity:0;transform:translateY(30px);transition:1s}
-.frame.show{opacity:1;transform:none}
+.sky{height:100vh;background:url('sky.jpg') center/cover;z-index:1}
+.mountain{top:20vh;z-index:2;opacity:.8}
+.waterfall{position:fixed;bottom:0;width:100%;height:60%;background:url('waterfall.gif') center/cover;opacity:.6;z-index:3}
+.mist{position:fixed;bottom:0;width:100%;height:40%;background:url('mist.png') center/cover;opacity:.5;animation:mistMove 25s linear infinite;z-index:4}
+@keyframes mistMove{from{background-position:0 0}to{background-position:600px 0}}
+
+.trees-back{top:0;z-index:5;animation:sway 8s ease-in-out infinite alternate}
+.trees-front{top:0;z-index:7;animation:sway 10s ease-in-out infinite alternate}
+@keyframes sway{from{transform:translateX(0)}to{transform:translateX(15px)}}
+
+.frame{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);
+opacity:0;text-align:center;z-index:6;transition:1s}
+.frame.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .frame h2{font-family:'Playfair Display',serif;font-size:42px}
 
-/* SECTIONS */
-.section{
-padding:100px 20px;text-align:center;
-opacity:0;transform:translateY(50px);transition:1s}
+.bird{position:fixed;width:35px;z-index:8;animation:fly 14s linear infinite}
+@keyframes fly{from{left:-10%}to{left:110%}}
+
+/* SECTION */
+.section{padding:120px 20px;text-align:center;background:#f7f6f3;
+opacity:0;transform:translateY(60px);transition:1s}
 .section.show{opacity:1;transform:none}
 .section h3{font-family:'Playfair Display',serif}
 
-/* GALLERY */
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.gallery img{width:100%;border-radius:15px}
-
-/* MUSIC BUTTON */
-#musicBtn{
-position:fixed;bottom:20px;right:20px;
-z-index:1000;border:none;background:#444;color:white;
-padding:12px;border-radius:50%;font-size:18px}
+#musicBtn{position:fixed;bottom:20px;right:20px;z-index:9999;background:#444;color:white;border:none;padding:12px;border-radius:50%;font-size:18px}
 </style>
 </head>
 
@@ -64,7 +59,6 @@ padding:12px;border-radius:50%;font-size:18px}
 
 <button id="musicBtn" onclick="toggleMusic()">🔊</button>
 
-<!-- COVER -->
 <div id="cover">
   <div class="cover-box">
     <h1>Luna & Maxime</h1>
@@ -73,56 +67,55 @@ padding:12px;border-radius:50%;font-size:18px}
   </div>
 </div>
 
-<!-- HERO -->
-<div class="hero">
+<div class="scene">
+  <div class="layer sky"></div>
+  <img class="layer mountain" src="mountain.png">
+  <div class="waterfall"></div>
+  <div class="mist"></div>
+  <img class="layer trees-back" src="trees-back.png">
+
   <div class="frame" id="nameFrame">
     <h2>The Wedding Of</h2>
     <h2>Luna & Maxime</h2>
     <p>30 . 03 . 2025</p>
   </div>
+
+  <img class="layer trees-front" src="trees-front.png">
 </div>
 
-<!-- PROFILE -->
 <div class="section">
   <h3>Bride & Groom</h3>
   <p>Maha suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan...</p>
 </div>
 
-<!-- EVENT -->
-<div class="section">
-  <h3>Akad Nikah</h3>
-  <p>Minggu, 30 Maret 2025 • 09.00 WIB</p>
-</div>
-
-<!-- GALLERY -->
-<div class="section">
-  <h3>Galeri Foto</h3>
-  <div class="gallery">
-    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
-    <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429">
-  </div>
-</div>
-
 <script>
 const music=document.getElementById("bg-music");
-const btn=document.getElementById("musicBtn");
 
 function openInvite(){
   document.getElementById('cover').classList.add('hide');
   music.play();
-  setTimeout(()=>document.getElementById('nameFrame').classList.add('show'),500);
+  setTimeout(()=>document.getElementById('nameFrame').classList.add('show'),1000);
 }
 
-function toggleMusic(){
-  if(music.paused){music.play();btn.innerHTML="🔊";}
-  else{music.pause();btn.innerHTML="🔇";}
-}
+setInterval(()=>{
+  const b=document.createElement("img");
+  b.src="bird.png";
+  b.className="bird";
+  b.style.top=Math.random()*40+"vh";
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),14000);
+},4000);
 
 const sections=document.querySelectorAll('.section');
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
 },{threshold:.3});
 sections.forEach(s=>observer.observe(s));
+
+function toggleMusic(){
+  if(music.paused){music.play();musicBtn.innerHTML="🔊";}
+  else{music.pause();musicBtn.innerHTML="🔇";}
+}
 </script>
 
 </body>
