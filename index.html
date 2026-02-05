@@ -120,4 +120,17 @@ function toggleMusic(){
   else{music.pause();btn.innerHTML="🔇";}
 }
 
-const sections=do
+const sections=document.querySelectorAll('.section');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('show');
+  });
+},{threshold:.3});
+sections.forEach(sec=>observer.observe(sec));
+
+function showGift(){document.getElementById('giftModal').style.display='flex'}
+function closeGift(){document.getElementById('giftModal').style.display='none'}
+</script>
+
+</body>
+</html>
